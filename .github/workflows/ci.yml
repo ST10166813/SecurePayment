@@ -35,3 +35,22 @@ jobs:
             npm ci
             npm run build || echo "No build script found"
           fi
+
+                # -------------------
+      # Docker Build + Trivy Scan
+      # -------------------
+      - name: Build Docker image for backend
+        if: ${{ hashFiles('backend/Dockerfile') != '' }}
+        run: |
+          cd backend
+          docker build -t securepayment-backend .
+
+      - name: Scan Docker image with Trivy
+        if: ${{ hashFiles('backend/Dockerfile') != '' }}
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: securepayment-backend
+          format: 'table'
+          exit-code: '0' # Set to '1' to fail build on vulnerabilities
+          vuln-type: 'os,library'
+

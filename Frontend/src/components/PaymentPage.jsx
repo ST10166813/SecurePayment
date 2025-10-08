@@ -15,15 +15,26 @@ export default function PaymentPage() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await API.post("/payments", form);
-      setMessage(res.data.message);
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Payment failed");
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Clean and normalize input
+  const payload = {
+    amount: form.amount.trim(),
+    currency: form.currency.trim().toUpperCase(),
+    provider: form.provider.trim(),
+    recipientAccount: form.recipientAccount.trim(),
+    swiftCode: form.swiftCode.trim().toUpperCase(),
   };
+
+  try {
+    const res = await API.post("/payments", payload);
+    setMessage(res.data.message);
+  } catch (error) {
+    setMessage(error.response?.data?.message || "Payment failed");
+  }
+};
+
 
   return (
     <div className="payment-container">

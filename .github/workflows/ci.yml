@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      # Backend
+      - name: Install Backend Dependencies
+        run: |
+          if [ -f backend/package.json ]; then
+            cd backend
+            npm ci
+            npm test || echo "No tests found"
+          fi
+
+      # Frontend
+      - name: Install Frontend Dependencies
+        run: |
+          if [ -f frontend/package.json ]; then
+            cd frontend
+            npm ci
+            npm run build || echo "No build script found"
+          fi

@@ -1,24 +1,46 @@
 .register-container {
   max-width: 400px;
   margin: 50px auto;
-  padding: 25px;
-  border: 1px solid #ccc;
+  /* Reduced padding to ensure space isn't pushing elements. */
+  padding: 20px; 
+  
+  border: 1px solid #444; 
   border-radius: 10px;
-  background: #f5f6fa;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: #333333; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: white; 
 }
 
 .register-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f5f6fa; /* Light color for the heading */
 }
 
 .register-container input {
   width: 100%;
   padding: 10px;
-  margin: 8px 0;
+  
+  /* Remove all margins to test if they are the cause. 
+     If the inputs are too close together, you can add vertical margin back. */
+  margin: 8px 0; /* 8px top/bottom, 0 left/right - This was the original. Let's keep it clean. */
+  
   border-radius: 6px;
-  border: 1px solid #aaa;
+  border: 1px solid #777; 
+  background-color: #444; 
+  color: white; 
+  
+  /* FIX 1: box-sizing is crucial for width: 100% */
+  box-sizing: border-box; 
+  
+  /* FIX 2: Ensure it behaves like a block element, taking full width */
+  display: block; 
+}
+
+/* FIX: This makes the placeholder text visible */
+.register-container input::placeholder {
+  color: #aaaaaa; /* Visible light gray for placeholder text */
+  opacity: 1; /* Reset opacity for Firefox compatibility */
 }
 
 .register-container button {
@@ -38,5 +60,5 @@
 .message {
   text-align: center;
   margin-top: 15px;
-  color: #e84118;
+  color: #ff6b6b; /* Bright error/message color */
 }

@@ -1,16 +1,21 @@
 .payment-container {
   max-width: 450px;
   margin: 50px auto;
-  padding: 30px;
+  /* Adjusted padding slightly to give inputs more room */
+  padding: 25px; 
+  
+  /* --- CONTRAST FIXES --- */
   border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #f5f6fa;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid #444; 
+  background-color: #333333; /* Dark gray background for the container */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: white; /* Ensures general text (like heading) is light */
 }
 
 .payment-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f5f6fa; /* Light color for the heading */
 }
 
 .payment-container input {
@@ -18,7 +23,24 @@
   padding: 10px;
   margin: 8px 0;
   border-radius: 6px;
-  border: 1px solid #aaa;
+  
+  /* --- CONTRAST FIXES --- */
+  border: 1px solid #777; 
+  background-color: #444; /* Dark input background */
+  color: white; /* Text typed by the user will be white */
+  
+  /* --- ALIGNMENT FIX (CRITICAL) --- */
+  /* This ensures width: 100% includes padding and border, preventing horizontal shift */
+  box-sizing: border-box; 
+  
+  /* Ensures the input occupies its own line and full width correctly */
+  display: block; 
+}
+
+/* Fix for placeholder text contrast (e.g., "Amount") */
+.payment-container input::placeholder {
+  color: #aaaaaa; /* Visible light gray for placeholder text */
+  opacity: 1; /* Reset opacity for Firefox compatibility */
 }
 
 .payment-container button {
@@ -38,5 +60,5 @@
 .message {
   text-align: center;
   margin-top: 15px;
-  color: #44bd32;
+  color: #44bd32; /* Keep the success message color visible */
 }

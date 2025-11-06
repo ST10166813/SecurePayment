@@ -3,13 +3,14 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
-  idNumber: { type: String, required: true, unique: true },
-  accountNumber: { type: String, required: true, unique: true },
+  idNumber: { type: String, required: true },
+  accountNumber: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  role: { type: String, enum: ["customer", "employee"], default: "customer" }
 });
 
-// Hash and salt password before saving
+// Hash password
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
@@ -17,6 +18,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Compare password
 userSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

@@ -5,6 +5,8 @@
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .staff-portal h2 {
@@ -24,6 +26,7 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px;
+  margin-bottom: 25px; /* add space below table */
 }
 
 thead tr {
@@ -35,17 +38,18 @@ thead tr {
 thead th {
   padding: 14px 10px;
   font-size: 14px;
+  border-radius: 8px 8px 0 0;
 }
 
 tbody tr {
   background: #f8f9fc;
   border-radius: 8px;
+  transition: background 0.2s;
 }
 
 tbody td {
   padding: 12px 10px;
   font-size: 14px;
-  border-bottom: 1px solid #dee2e6;
 }
 
 tbody tr:hover {
@@ -53,8 +57,8 @@ tbody tr:hover {
 }
 
 button {
-  padding: 6px 14px;
-  font-size: 13px;
+  padding: 8px 16px;
+  font-size: 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -69,17 +73,22 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* Submit button styling */
 button.submit {
   margin-top: 20px;
+  align-self: flex-end; /* moves button to the right */
   background: #28a745;
   color: #fff;
   font-weight: 600;
-  float: right;
 }
 
+/* Status badges */
 tbody tr span {
   font-weight: bold;
   color: #6c757d;
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 /* RESPONSIVE */

@@ -7,6 +7,7 @@ import PaymentPage from "./components/PaymentPage";
 import StaffPortal from "./components/StaffPortal";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import Footer from "./components/Footer"; // new footer component
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -19,23 +20,26 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/login"
-          element={<LoginPage onLoginSuccess={() => setRole(localStorage.getItem("role"))} />}
-        />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route
-          path="/portal"
-          element={
-            role === "employee" ? <StaffPortal /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
+      <div className="app-container">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/login"
+              element={<LoginPage onLoginSuccess={() => setRole(localStorage.getItem("role"))} />}
+            />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route
+              path="/portal"
+              element={role === "employee" ? <StaffPortal /> : <Navigate to="/login" replace />}
+            />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }

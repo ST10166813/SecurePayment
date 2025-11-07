@@ -47,7 +47,7 @@ import API from "../api";
 import "./LoginPage.css";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function LoginPage() {
+export default function LoginPage({ onLoginSuccess }) {
   const [form, setForm] = useState({ email: "", accountNumber: "", password: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -59,8 +59,16 @@ export default function LoginPage() {
     try {
       const res = await API.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
+
       setMessage("Login successful!");
-      navigate("/payment");
+      if (onLoginSuccess) onLoginSuccess(); // 👈 update App state
+
+      if (res.data.role === "employee") {
+        navigate("/portal");
+      } else {
+        navigate("/payment");
+      }
     } catch (error) {
       setMessage(error.response?.data?.message || "Login failed");
     }
@@ -88,6 +96,11 @@ export default function LoginPage() {
         </div>
 
         <button type="submit">Sign in</button>
+        <p style={{ marginTop: "10px" }}>
+  <a href="/forgot-password" style={{ color: "#007bff" }}>
+    Forgot Password?
+  </a>
+</p>
       </form>
 
       {message && (

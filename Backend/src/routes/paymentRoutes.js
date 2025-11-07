@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/authMiddleware");
-const { createPayment } = require("../controllers/paymentController");
 
-router.post("/", auth, createPayment);
+const { createPayment } = require("../controllers/paymentController");
+const { validatePayment } = require("../middleware/validators");
+const { requireAuth } = require("../middleware/authMiddleware");
+
+// ✅ Protect Route Correctly
+router.post("/create", requireAuth, validatePayment, createPayment);
 
 module.exports = router;
